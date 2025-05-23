@@ -20,16 +20,18 @@ class SampleUser
 	function showPath(){
 		return realpath(dirname(__FILE__));
 	}
-	function insertName($data){
-		if (empty($data['name'])) {
+	function insertUser($name, $email, $password){
+		if (empty($name) || empty($email) || empty($password)) {
 			$msg = "<span class='error'>Fields must not be empty !.</span>";
 	 		return $msg;
 		}else{
-			$name = $this->fm->validation($data['name']);
-			$sql = "INSERT INTO tbl_name(name) VALUES('$name')";
+			$name = $this->fm->validation($name);
+			$email = $this->fm->validation($email);
+			$password = $this->fm->validation($password);
+			$sql = "INSERT INTO user(name, email, password) VALUES('$name','$email', '$password')";
 			$inserted = $this->db->insert($sql);
 			if ($inserted) {
-			   $msg = "<span class='error'>Inserted !.</span>";
+			   $msg = "<span class='error'>User data Inserted !.</span>";
 			   return $msg;
 			}else{
 			   $msg = "<span class='error'>Not Inserted !.</span>";
@@ -40,13 +42,13 @@ class SampleUser
 		
 
 	}
-	function getNames(){
-		$sql = "SELECT * FROM tbl_name";
-		$names = $this->db->select($sql);
-		return $names;
+	function getAllUsers(){
+		$sql = "SELECT * FROM user";
+		$users = $this->db->select($sql);
+		return $users;
 	}
 	public function deleteName($delid){
-		$sql = "DELETE FROM tbl_name WHERE id = '$delid'";
+		$sql = "DELETE FROM user WHERE id = '$delid'";
 		$del = $this->db->delete($sql);
 		if ($del) {
 			return "Successfully Deleted !";
@@ -55,12 +57,12 @@ class SampleUser
 		}
 	}
 	public function getNameById($uid){
-		$sql = "SELECT * FROM tbl_name WHERE id='$uid' ";
+		$sql = "SELECT * FROM user WHERE id='$uid' ";
 		$name = $this->db->select($sql);
 		return $name;
 	}
 	public function updateNameById($name,$uid){
-		$sql = "UPDATE tbl_name SET name='$name' WHERE id='$uid' ";
+		$sql = "UPDATE user SET name='$name' WHERE id='$uid' ";
 		$up = $this->db->update($sql);
 		if ($up) {
 			return "Updated";

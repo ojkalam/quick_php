@@ -1,3 +1,3 @@
 # quick_php
-A quick starter package for app development using Raw PHP
+A quick start package for app development using raw php
 @kalam - 2018
